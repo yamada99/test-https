@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    </head>
+    <body>
+        <button onclick="download()">Donwload XLSX</button>
+        <script>
+            function download(){
+                const contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet([
+                    ["みずほ銀行","0001"],
+                    ["三菱UFJ銀行","0002"],
+                    ["三井住友銀行","0003"],
+                    ["りそな銀行","0004"],
+                    ["埼玉りそな銀行","0005"],
+                ]);
+                XLSX.utils.book_append_sheet(wb, ws, "Bank Codes");
+                const xlsx = XLSX.write(wb, { type:"array"});
+                const  dataUri = URL.createObjectURL(new Blob([xlsx],{
+                    type:contentType
+                }));
+                const a = document.createElement("a");
+                a.href = dataUri;
+                a.download = "bankcode.xlsx";
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        </script>
+    </body>
+</html>
