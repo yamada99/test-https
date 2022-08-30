@@ -12,9 +12,10 @@ class MyHandler(s.BaseHTTPRequestHandler):
         # リクエスト取得
         content_len  = int(self.headers.get("content-length"))
         body = json.loads(self.rfile.read(content_len).decode('utf-8'))
+        print(body)
 
         # レスポンス処理
-        body["test"]="respose"
+        body["test"]="response"
         self.send_response(200)
         self.send_header('Content-type', 'application/json;charset=utf-8')
         self.end_headers()
